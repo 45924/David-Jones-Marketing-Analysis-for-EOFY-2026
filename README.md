@@ -103,7 +103,7 @@ GROUP BY a.platform
 ORDER BY ctr_pct DESC;
 ```
 
-**Technique:** conditional ratio metrics with `NULLIF` to prevent divide-by-zero.
+**Technique:** conditional ratio metrics with `NULLIF` to prevent divide-by-zero. <br>
 **Finding:** Instagram leads on CTR (6.02%), but WeChat converts clicks to orders best (24.98%). The best click-getter and the best closer are on different platforms.
 
 ---
@@ -135,7 +135,7 @@ LEFT JOIN revenue r ON c.campaign_id = r.campaign_id
 ORDER BY roi_pct DESC;
 ```
 
-**Technique:** two CTEs combined, `LEFT JOIN` + `COALESCE` to keep campaigns with no revenue.
+**Technique:** two CTEs combined, `LEFT JOIN` + `COALESCE` to keep campaigns with no revenue.<br>
 **Finding:** Every campaign is profitable (ROI > 190%). Autumn Fashion Launch 2024 tops the list at 294.30%; the EOFY 2024 benchmark sits mid-pack at 234.91%.
 
 ---
@@ -167,7 +167,7 @@ GROUP BY at.campaign_id, at.campaign_name
 ORDER BY total_actual_sales_revenue DESC;
 ```
 
-**Technique:** attribution via the `advertisement_order` bridge; `DISTINCT` in the CTE prevents fan-out double counting before aggregation.
+**Technique:** attribution via the `advertisement_order` bridge; `DISTINCT` in the CTE prevents fan-out double counting before aggregation.<br>
 **Finding:** Measures *real* completed-order revenue (distinct from the platform-reported figure in Concern 2). EOFY Stocktake Sale 2025 ranks third overall at $145,021 from 201 attributed orders.
 
 ---
@@ -193,7 +193,7 @@ GROUP BY loyalty_tier
 ORDER BY avg_ltv DESC;
 ```
 
-**Technique:** per-customer aggregation in a CTE, then a second aggregation to average across the tier (avoids inflating the mean).
+**Technique:** per-customer aggregation in a CTE, then a second aggregation to average across the tier (avoids inflating the mean).<br>
 **Finding:** Gold members average $46,369 in value — 5.3× Bronze ($8,732) — despite numbering only 57 against 244 Bronze.
 
 ---
@@ -211,7 +211,7 @@ GROUP BY device
 ORDER BY avg_engagement_seconds DESC;
 ```
 
-**Technique:** straightforward grouped aggregation contrasting volume against average duration.
+**Technique:** straightforward grouped aggregation contrasting volume against average duration.<br>
 **Finding:** Phone delivers the most interactions (8,203) but the shortest dwell time (28.1s); Desktop is the reverse (61.4s). Mobile = reach, desktop = depth.
 
 ---
@@ -234,7 +234,7 @@ GROUP BY o.payment_method
 ORDER BY total_revenue DESC;
 ```
 
-**Technique:** `COUNT(DISTINCT ...)` to count orders/customers correctly across a joined line-item table.
+**Technique:** `COUNT(DISTINCT ...)` to count orders/customers correctly across a joined line-item table.<br>
 **Finding:** Debit/Credit Card drives the most revenue ($3.29M), but the **David Jones Credit Card** has the highest average order value ($794 vs $750) — store-card holders spend more per visit.
 
 ---
@@ -256,7 +256,7 @@ GROUP BY p.category
 ORDER BY total_revenue DESC;
 ```
 
-**Technique:** profit calculated inline as `gross_price - unit_cost` weighted by quantity.
+**Technique:** profit calculated inline as `gross_price - unit_cost` weighted by quantity.<br>
 **Finding:** Womenswear leads on revenue ($1.74M) and profit ($843k); Beauty sells the most units (5,533). Kids and Food & Wine trail.
 
 ---
@@ -277,7 +277,7 @@ GROUP BY a.platform, ap.device
 ORDER BY conversion_efficiency_pct DESC;
 ```
 
-**Technique:** multi-dimension grouping (platform × device) to expose interaction effects hidden in platform-level totals.
+**Technique:** multi-dimension grouping (platform × device) to expose interaction effects hidden in platform-level totals.<br>
 **Finding:** **Instagram-on-Phone** is the single best placement (0.91%). Instagram leads on every device; every X placement collapses to ~0.19–0.20%.
 
 ---
@@ -300,7 +300,7 @@ GROUP BY c.location
 ORDER BY total_revenue DESC;
 ```
 
-**Technique:** three-table join with distinct-order counting to derive AOV per location.
+**Technique:** three-table join with distinct-order counting to derive AOV per location.<br>
 **Finding:** Sydney CBD is the top market ($860k from 1,177 orders). High-volume metros run lower baskets; smaller affluent areas (Gold Coast, Canberra) post the highest AOV (~$820).
 
 ---
@@ -327,7 +327,7 @@ JOIN conv  c ON s.platform = c.platform
 ORDER BY cpa ASC;
 ```
 
-**Technique:** spend and conversions aggregated separately, then joined — avoids mixing two different grains in one pass.
+**Technique:** spend and conversions aggregated separately, then joined — avoids mixing two different grains in one pass.<br>
 **Finding:** Instagram is cheapest at $1.99 per acquisition; X is the outlier at $11.91 — roughly 6× more expensive.
 
 ---
@@ -352,7 +352,7 @@ FROM ad_perf
 ORDER BY ctr_rank;
 ```
 
-**Technique:** **window functions** (`RANK() OVER`) to rank the same rows on two independent dimensions side by side.
+**Technique:** **window functions** (`RANK() OVER`) to rank the same rows on two independent dimensions side by side.<br>
 **Finding:** Top-CTR ads are all Instagram, but funding doesn't follow performance — the best ad by CTR ranks only 147th by budget. A clear misallocation to fix.
 
 ---
@@ -405,7 +405,7 @@ WHERE most_profitable_rank <= 3
 ORDER BY yr, most_profitable_rank;
 ```
 
-**Technique:** four chained CTEs, `PARTITION BY yr` windowed ranking (top and bottom in one pass), and a `CASE` segment label. The discount CTE is wired in even though discounts are unpopulated, so the logic is production-ready.
+**Technique:** four chained CTEs, `PARTITION BY yr` windowed ranking (top and bottom in one pass), and a `CASE` segment label. The discount CTE is wired in even though discounts are unpopulated, so the logic is production-ready.<br>
 **Finding:** A stable set of winners recurs yearly — Dyson (Electronics), La Mer (Beauty), Camilla / Sass & Bide (Womenswear), Coach (Accessories). Persistent laggards: Seed Heritage / Polo (Kids) and Penfolds (Food & Wine).
 
 ---
@@ -453,18 +453,18 @@ FROM cust_profit
 ORDER BY avg_daily_profit DESC;
 ```
 
-**Technique:** normalises total profit by tenure to measure spending *velocity* rather than cumulative spend.
+**Technique:** normalises total profit by tenure to measure spending *velocity* rather than cumulative spend.<br>
 **Finding:** The fastest spenders are **recently-acquired Gold members** (e.g. ~$498/day over 66 days), while some long-tenured customers sit near $27/day. Longer tenure does **not** predict higher value — a key reframing for retention vs acquisition strategy.
 
 ---
 
 ## Headline findings
 
-1. **Instagram is the acquisition engine**: best CTR (6.02%), lowest CPA ($1.99), best placement (Instagram/Phone). **X underperforms on every metric** and is the obvious channel to wind back.
-2. **WeChat is the best closer** (24.98% click-to-conversion) pair it with Instagram in a reach-then-retarget funnel.
-3. **Value concentrates in a small Gold cohort** ($46k LTV), and the highest-velocity spenders are *newly acquired* Gold members — tenure does not drive value.
-4. **Budget doesn't follow ad performance** — top-CTR creatives are underfunded.
-5. **Hero brands and categories recur** — Womenswear and Beauty lead; Camilla, Sass & Bide, La Mer, Dyson, and Coach are perennial profit drivers.
+1. **Instagram is the acquisition engine**: best CTR (6.02%), lowest CPA ($1.99), best placement (Instagram/Phone). **X underperforms on every metric** and is the obvious channel to wind back.<br>
+2. **WeChat is the best closer** (24.98% click-to-conversion) pair it with Instagram in a reach-then-retarget funnel.<br>
+3. **Value concentrates in a small Gold cohort** ($46k LTV), and the highest-velocity spenders are *newly acquired* Gold members — tenure does not drive value.<br>
+4. **Budget doesn't follow ad performance** — top-CTR creatives are underfunded.<br>
+5. **Hero brands and categories recur** — Womenswear and Beauty lead; Camilla, Sass & Bide, La Mer, Dyson, and Coach are perennial profit drivers.<br>
 
 Full recommendations for EOFY 2026 are in `report/Assignment_1_Report.docx`.
 
