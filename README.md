@@ -1,6 +1,8 @@
-# David Jones — Marketing & Customer Behaviour Analytics (MySQL)
+# David Jones Marketing & Customer Behaviour Analytics (MySQL)
 
-A SQL analytics project that designs a relational database for an online retailer and uses it to answer 14 real marketing questions: channel efficiency, campaign ROI, customer lifetime value, product profitability and more, with the goal of guiding the **End of Financial Year (EOFY) 2026** marketing campaign.
+A SQL analytics project that designs a relational database for an online retailer and uses it to answer 14 real marketing questions: channel efficiency, campaign ROI, customer lifetime value, product profitability and more, to guide the **End of Financial Year (EOFY) 2026** marketing campaign.
+
+Dashboard Presentation link: https://drive.google.com/file/d/184B0w_PcspMxRSK9nFPm7ItDJnBfbeU-/view?usp=drive_link
 ---
 
 ## Table of contents
