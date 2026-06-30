@@ -69,7 +69,7 @@ Key relationships:
 ├── report/
 │   └── Assignment_1_Report.docx       # Full written analysis & recommendations
 └── dashboard/
-    └── PowerBi                        # Interactive Dashboard for Visualization
+    └── David Jones Dashboard.pbix     # Interactive Dashboard for Visualization
 ```
 ---
 
